@@ -1351,7 +1351,7 @@
                 "HSSI_CONNECTING" / "HSSI_ESTABLISHED" /
                 "HSSR_CONNECTING" / "HSSR_JOINED"
 
-      SocksUsername = SocksPassword = a quoted string
+      EscapedUsername, EscapedPassword = quoted strings
 
       HSAddress = 16*Base32Character
       Base32Character = ALPHA / "2" / "3" / "4" / "5" / "6" / "7"
@@ -1415,6 +1415,13 @@
       HSSR_*      (service-side rendezvous-point circuit states)
         HSSR_CONNECTING          (connecting to client's rend point)
         HSSR_JOINED              (connected to client's RP circuit)
+
+   The "SOCKS_USERNAME" and "SOCKS_PASSWORD" fields indicate the credentials
+   that were used by a SOCKS client to connect to Tor's SOCKS port and
+   initiate this circuit. Special characters are escaped. (Streams for SOCKS
+   clients connected with different usernames and/or passwords are isolated
+   on separate circuits if the IsolateSOCKSAuth flag is active; see Proposal
+   171.)
 
    The "REND_QUERY" field is provided only for hidden-service-related
    circuits, and only in versions 0.2.3.11-alpha and later.  Clients
